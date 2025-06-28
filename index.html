@@ -227,29 +227,6 @@
             transform: translateY(-5px);
         }
 
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(59, 130, 246, 0.1);
-            filter: blur(60px);
-            z-index: 1;
-        }
-
-        .floating-1 {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            left: -100px;
-        }
-
-        .floating-2 {
-            width: 400px;
-            height: 400px;
-            bottom: -100px;
-            right: -100px;
-        }
-
         /* Header */
         header {
             position: fixed;
@@ -888,7 +865,7 @@
                     <img src="shan.png" alt="Zeeshan Aslam">
                 </div>
                 <div class="about-content animate__animated animate__fadeInRight">
-                    <p>I'm a passionate Full Stack Developer with expertise in both frontend and backend technologies. My journey in web development began during my university studies, where I completed projects like the Food Wastage Reduction System and Courier Management System.</p>
+                    <p>I'm a passionate Full Stack Developer with expertise in both frontend and backend technologies. My journey in web development began during my university studies, where I completed projects like the Food Wastage Reduction System and Courier Management System and many more.</p>
                     
                     <p>I specialize in creating efficient, user-friendly web applications with clean code and thoughtful design. My technical skills include:</p>
                     
@@ -1023,7 +1000,7 @@
                         </div>
                         <div>
                             <h4>Email</h4>
-                            <p>shanikharal83@example.com</p>
+                            <p>shanikharal83@gmail.com</p>
                         </div>
                     </div>
                     
@@ -1048,7 +1025,13 @@
                     </div>
                 </div>
                 
-                <form id="contactForm" class="animate__animated animate__fadeInRight">
+                <!-- Updated Contact Form -->
+                <form id="contactForm" action="https://formsubmit.co/shanikharal83@gmail.com" method="POST" class="animate__animated animate__fadeInRight">
+                    <!-- FormSubmit required fields -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://yourgithubusername.github.io/thank-you.html">
+                    <input type="text" name="_honey" style="display:none">
+                    
                     <div class="form-group float-label">
                         <input type="text" id="name" name="name" required placeholder=" ">
                         <label for="name">Your Name</label>
@@ -1163,19 +1146,25 @@
             showNotification('Sending your message...', 'loading');
             
             try {
-                // Simulate API call (replace with actual fetch)
-                await new Promise(resolve => setTimeout(resolve, 1500));
+                // Get form data
+                const formData = new FormData(contactForm);
                 
-                // Randomly succeed or fail for demo (remove in production)
-                const isSuccess = Math.random() > 0.3;
+                // Send to FormSubmit
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 
-                if (isSuccess) {
+                if (response.ok) {
                     showNotification('Message sent successfully! I will get back to you soon.', 'success');
                     contactForm.reset();
                     submitBtn.innerHTML = `${icons.success} Sent!`;
                     await new Promise(resolve => setTimeout(resolve, 1500));
                 } else {
-                    throw new Error('Failed to send message. Please try again later.');
+                    throw new Error('Failed to send message. Please try again later or email me directly at shanikharal83@gmail.com');
                 }
             } catch (error) {
                 showNotification(error.message, 'error');
